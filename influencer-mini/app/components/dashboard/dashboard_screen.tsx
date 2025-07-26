@@ -3,6 +3,8 @@ import { Card } from "../ui/card";
 import { Icon } from "../ui/icon";
 import { useAccount } from "wagmi";
 import { ConnectWallet } from "@coinbase/onchainkit/wallet";
+import { useWalletBalance } from "../../hooks/useWalletBalance";
+import { useWalletTransactions } from "../../hooks/useWalletTransactions";
 
 type DashboardScreenProps = {
   setActiveTab: (tab: string) => void;
@@ -10,30 +12,8 @@ type DashboardScreenProps = {
 
 export function DashboardScreen({ setActiveTab }: DashboardScreenProps) {
   const { isConnected } = useAccount();
-
-  const recentTransactions = [
-    {
-      id: 1,
-      name: "Nike Summer",
-      date: "2025-07-20",
-      amount: "+$2.500",
-      icon: "star" as const
-    },
-    {
-      id: 2,
-      name: "Coca-cola Refresh",
-      date: "2025-07-20",
-      amount: "+$2.500",
-      icon: "star" as const
-    },
-    {
-      id: 3,
-      name: "Adidas Cool Party",
-      date: "2025-07-20",
-      amount: "+$2.500",
-      icon: "star" as const
-    }
-  ];
+  const { formattedBalance, isLoading, balance, usdValue } = useWalletBalance();
+  const { transactions, isLoading: transactionsLoading } = useWalletTransactions();
 
   if (!isConnected) {
     return (
@@ -70,8 +50,12 @@ export function DashboardScreen({ setActiveTab }: DashboardScreenProps) {
         <div className="space-y-6">
           <div className="space-y-2">
             <p className="text-gray-200 text-sm font-normal">Total balance</p>
-            <h1 className="text-4xl font-bold text-white">$18,650</h1>
-            <p className="text-gray-200 text-sm">+23.5% this month</p>
+            <h1 className="text-4xl font-bold text-white">
+              {isLoading ? "Loading..." : `${formattedBalance}`}
+            </h1>
+            <p className="text-gray-200 text-sm">
+              {usdValue ? `≈ $${usdValue.toLocaleString()}` : balance === 0 ? "$0.00" : "Loading USD value..."}
+            </p>
           </div>
           
           <div className="flex space-x-3">
@@ -129,18 +113,38 @@ export function DashboardScreen({ setActiveTab }: DashboardScreenProps) {
           </div>
           
           <div className="space-y-3">
-            {recentTransactions.map((transaction) => (
-              <div key={transaction.id} className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                  <Icon name={transaction.icon} className="text-green-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-black">{transaction.name}</p>
-                  <p className="text-gray-500 text-sm">{transaction.date}</p>
-                </div>
-                <p className="text-green-600 font-medium">{transaction.amount}</p>
+            {transactionsLoading ? (
+              <div className="text-center py-4">
+                <p className="text-gray-500">Loading transactions...</p>
               </div>
-            ))}
+            ) : transactions.length > 0 ? (
+              transactions.slice(0, 3).map((transaction) => (
+                <div key={transaction.id} className="flex items-center space-x-3">
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                    transaction.type === 'incoming' ? 'bg-green-100' : 'bg-red-100'
+                  }`}>
+                    <Icon name={transaction.icon} className={
+                      transaction.type === 'incoming' ? 'text-green-600' : 'text-red-600'
+                    } />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium text-black">
+                      {transaction.type === 'incoming' ? 'Received' : 'Sent'} 
+                    </p>
+                    <p className="text-gray-500 text-sm">{transaction.date}</p>
+                  </div>
+                  <p className={`font-medium ${
+                    transaction.type === 'incoming' ? 'text-green-600' : 'text-red-600'
+                  }`}>
+                    {transaction.amount}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-4">
+                <p className="text-gray-500">No transactions found</p>
+              </div>
+            )}
           </div>
         </div>
       </Card>
