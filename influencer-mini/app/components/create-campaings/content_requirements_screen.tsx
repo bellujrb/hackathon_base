@@ -1,34 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Icon } from "../ui/icon";
+import { useCampaign } from "../../contexts/CampaignContext";
+import { ContentType, Platform } from "../../types/campaign";
 
 type ContentRequirementsScreenProps = {
   setActiveTab: (tab: string) => void;
 };
 
-type ContentType = {
-  id: string;
-  name: string;
-  description: string;
-  icon: "heart" | "star" | "check" | "plus" | "arrow-right" | "lightning" | "wallet" | "camera";
-};
-
-type Platform = {
-  id: string;
-  name: string;
-  icon: "heart" | "star" | "check" | "plus" | "arrow-right" | "lightning" | "wallet" | "camera";
-};
-
 export function ContentRequirementsScreen({ setActiveTab }: ContentRequirementsScreenProps) {
-  const [selectedContentTypes, setSelectedContentTypes] = useState<string[]>(["video", "stories"]);
-  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(["instagram"]);
+  const { campaignData, updateContentRequirements } = useCampaign();
+  const [selectedContentTypes, setSelectedContentTypes] = useState<string[]>(campaignData.selectedContentTypes.length > 0 ? campaignData.selectedContentTypes : ["video", "stories"]);
+  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(campaignData.selectedPlatforms.length > 0 ? campaignData.selectedPlatforms : ["instagram"]);
+
+  // Sync local state with context when context changes
+  useEffect(() => {
+    if (campaignData.selectedContentTypes.length > 0) {
+      setSelectedContentTypes(campaignData.selectedContentTypes);
+    }
+    if (campaignData.selectedPlatforms.length > 0) {
+      setSelectedPlatforms(campaignData.selectedPlatforms);
+    }
+  }, [campaignData.selectedContentTypes, campaignData.selectedPlatforms]);
 
   const contentTypes: ContentType[] = [
     {
       id: "video",
       name: "Video",
-      description: "Reels, TikToks, Shorts",
+      description: "Reels, Shorts",
       icon: "star"
     },
     {
@@ -69,8 +69,8 @@ export function ContentRequirementsScreen({ setActiveTab }: ContentRequirementsS
   };
 
   const handleContinue = () => {
-    // TODO: Navigate to next step of campaign creation
-    console.log("Continue to next step", { selectedContentTypes, selectedPlatforms });
+    updateContentRequirements({ selectedContentTypes, selectedPlatforms });
+    setActiveTab("success-metrics");
   };
 
   const toggleContentType = (contentTypeId: string) => {
@@ -90,6 +90,12 @@ export function ContentRequirementsScreen({ setActiveTab }: ContentRequirementsS
   };
 
   const isFormValid = selectedContentTypes.length > 0 && selectedPlatforms.length > 0;
+  
+  console.log("Form validation:", {
+    selectedContentTypes,
+    selectedPlatforms,
+    isFormValid
+  });
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -169,15 +175,25 @@ export function ContentRequirementsScreen({ setActiveTab }: ContentRequirementsS
         </div>
       </div>
 
-      {/* Continue Button */}
-      <Button
-        onClick={handleContinue}
-        disabled={!isFormValid}
-        className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-medium disabled:bg-gray-300 disabled:cursor-not-allowed"
-      >
-        Continue
-        <Icon name="arrow-right" className="ml-2" />
-      </Button>
+      {/* Navigation Buttons */}
+      <div className="flex space-x-3">
+        <Button
+          onClick={handleBackToDashboard}
+          variant="outline"
+          className="flex-1 bg-white border-gray-300 text-gray-700 hover:bg-gray-50 py-3 rounded-lg font-medium"
+        >
+          <Icon name="arrow-right" className="mr-2 rotate-180" />
+          Back
+        </Button>
+        <Button
+          onClick={handleContinue}
+          disabled={!isFormValid}
+          className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-medium disabled:bg-gray-300 disabled:cursor-not-allowed"
+        >
+          Continue
+          <Icon name="arrow-right" className="ml-2" />
+        </Button>
+      </div>
     </div>
   );
 } 

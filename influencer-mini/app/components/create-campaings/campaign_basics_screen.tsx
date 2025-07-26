@@ -1,21 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Icon } from "../ui/icon";
+import { useCampaign } from "../../contexts/CampaignContext";
 
 type CampaignBasicsScreenProps = {
   setActiveTab: (tab: string) => void;
 };
 
 export function CampaignBasicsScreen({ setActiveTab }: CampaignBasicsScreenProps) {
-  const [campaignName, setCampaignName] = useState("");
-  const [brandName, setBrandName] = useState("");
+  const { campaignData, updateCampaignBasics } = useCampaign();
+  const [campaignName, setCampaignName] = useState(campaignData.campaignName);
+  const [brandName, setBrandName] = useState(campaignData.brandName);
+
+  // Sync local state with context when context changes
+  useEffect(() => {
+    setCampaignName(campaignData.campaignName);
+    setBrandName(campaignData.brandName);
+  }, [campaignData.campaignName, campaignData.brandName]);
 
   const handleBackToDashboard = () => {
     setActiveTab("dashboard");
   };
 
   const handleContinue = () => {
+    updateCampaignBasics({ campaignName, brandName });
     setActiveTab("content-requirements");
   };
 
