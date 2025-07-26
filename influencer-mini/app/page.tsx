@@ -19,15 +19,25 @@ import {
   WalletDropdownDisconnect,
 } from "@coinbase/onchainkit/wallet";
 import { useEffect, useMemo, useState, useCallback } from "react";
-import { Button } from "./components/DemoComponents";
-import { Icon } from "./components/DemoComponents";
-import { Home } from "./components/DemoComponents";
-import { Features } from "./components/DemoComponents";
+import { useAccount } from "wagmi";
+import { Features } from "./components/onboarding/onboarding_features";
+import { Button } from "./components/ui/button";
+import { Icon } from "./components/ui/icon";
+import { Home } from "./components/welcome_screen/welcome";
+import { ConnectionScreen } from "./components/connection/connection_screen";
+import { DashboardScreen } from "./components/dashboard/dashboard_screen";
+import { BottomNavigation } from "./components/navigation/bottom_navigation";
+import { CampaignsScreen } from "./components/campaigns/campaigns_screen";
+import { CampaignBasicsScreen } from "./components/campaigns/campaign_basics_screen";
+import { ContentRequirementsScreen } from "./components/campaigns/content_requirements_screen";
+import { AnalyticsScreen } from "./components/analytics/analytics_screen";
+import { SettingsScreen } from "./components/settings/settings_screen";
 
 export default function App() {
   const { setFrameReady, isFrameReady, context } = useMiniKit();
   const [frameAdded, setFrameAdded] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
+  const { isConnected } = useAccount();
 
   const addFrame = useAddFrame();
   const openUrl = useOpenUrl();
@@ -73,31 +83,37 @@ export default function App() {
   return (
     <div className="flex flex-col min-h-screen font-sans text-[var(--app-foreground)] mini-app-theme from-[var(--app-background)] to-[var(--app-gray)]">
       <div className="w-full max-w-md mx-auto px-4 py-3">
-        <header className="flex justify-between items-center mb-3 h-11">
-          <div>
-            <div className="flex items-center space-x-2">
-              <Wallet className="z-10">
-                <ConnectWallet>
-                  <Name className="text-inherit" />
-                </ConnectWallet>
-                <WalletDropdown>
-                  <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
-                    <Avatar />
-                    <Name />
-                    <Address />
-                    <EthBalance />
-                  </Identity>
-                  <WalletDropdownDisconnect />
-                </WalletDropdown>
-              </Wallet>
-            </div>
+        <header className="flex justify-between items-center mb-6 h-11 relative z-[9999]">
+          <h1 className="text-xl font-bold text-[var(--app-foreground)]">InfluNest</h1>
+          <div className="flex items-center space-x-2">
+            <Wallet className="z-[10000] relative">
+              <ConnectWallet>
+                <Name className="text-inherit" />
+              </ConnectWallet>
+              <WalletDropdown className="z-[10000]">
+                <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
+                  <Avatar />
+                  <Name />
+                  <Address />
+                  <EthBalance />
+                </Identity>
+                <WalletDropdownDisconnect />
+              </WalletDropdown>
+            </Wallet>
+            {saveFrameButton}
           </div>
-          <div>{saveFrameButton}</div>
         </header>
 
-        <main className="flex-1">
+        <main className={`flex-1 ${(activeTab === "dashboard" || activeTab === "campaigns" || activeTab === "analytics" || activeTab === "settings" || activeTab === "campaign-basics" || activeTab === "content-requirements") ? "pb-20" : ""}`}>
           {activeTab === "home" && <Home setActiveTab={setActiveTab} />}
+          {activeTab === "connection" && <ConnectionScreen setActiveTab={setActiveTab} />}
           {activeTab === "features" && <Features setActiveTab={setActiveTab} />}
+          {activeTab === "dashboard" && <DashboardScreen setActiveTab={setActiveTab} />}
+          {activeTab === "campaigns" && <CampaignsScreen setActiveTab={setActiveTab} />}
+          {activeTab === "campaign-basics" && <CampaignBasicsScreen setActiveTab={setActiveTab} />}
+          {activeTab === "content-requirements" && <ContentRequirementsScreen setActiveTab={setActiveTab} />}
+          {activeTab === "analytics" && <AnalyticsScreen setActiveTab={setActiveTab} />}
+          {activeTab === "settings" && <SettingsScreen setActiveTab={setActiveTab} />}
         </main>
 
         <footer className="mt-2 pt-4 flex justify-center">
@@ -111,6 +127,15 @@ export default function App() {
           </Button>
         </footer>
       </div>
+      
+      {/* Bottom Navigation - Only show from dashboard onwards */}
+      {(activeTab === "dashboard" || activeTab === "campaigns" || activeTab === "analytics" || activeTab === "settings" || activeTab === "campaign-basics" || activeTab === "content-requirements") && (
+        <BottomNavigation 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab} 
+          isConnected={isConnected} 
+        />
+      )}
     </div>
   );
 }
