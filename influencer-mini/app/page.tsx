@@ -11,6 +11,7 @@ import {
   Address,
   Avatar,
   EthBalance,
+  Badge,
 } from "@coinbase/onchainkit/identity";
 import {
   ConnectWallet,
@@ -96,7 +97,9 @@ export default function App() {
               <WalletDropdown className="z-[10000]">
                 <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
                   <Avatar />
-                  <Name />
+                  <Name>
+                    <Badge />
+                  </Name>
                   <Address />
                   <EthBalance />
                 </Identity>
