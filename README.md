@@ -34,7 +34,7 @@ We created a MiniApp on Base using the onchain kit resources from the official d
 
 ### 🔁 End-to-End MiniApp Flowchart
 
-![DApp Flowchart](https://github.com/user-attachments/assets/702c19d9-dc39-4f37-90fd-d43de226ca42)
+![DApp Flowchart](https://github.com/user-attachments/assets/0cf87483-962d-40c0-bbe6-666372e04e42)
 
 ---
 
