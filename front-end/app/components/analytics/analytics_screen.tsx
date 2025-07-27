@@ -6,9 +6,8 @@ import { TimeFilters } from "./time-filters";
 import { MetricCard } from "./metric-card";
 import { PerformanceChart } from "./performance-chart";
 import { EngagementBreakdown } from "./engagement-breakdown";
-import { BestPerformance } from "./best-performance";
-import { TopPerformingContent } from "./top-performing-content";
-import { MetricCard as MetricCardType, ChartData, ContentItem, BestPerformanceData } from "./types";
+
+import { MetricCard as MetricCardType, ChartData } from "./types";
 import { Card } from "@/components/card";
 import Icon from "@/components/icon";
 
@@ -121,10 +120,6 @@ export function AnalyticsScreen() {
       case 'campaigns': return (value: number) => value.toString();
       default: return (value: number) => value.toString();
     }
-  };
-
-  const handleViewAll = () => {
-    // Implementar navegação para ver todos os conteúdos
   };
 
   const handleDownload = () => {

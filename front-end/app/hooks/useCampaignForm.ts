@@ -11,9 +11,10 @@ export function useCampaignForm() {
       campaignData.brandName.trim().length > 0 &&
       campaignData.selectedContentTypes.length > 0 &&
       campaignData.selectedPlatforms.length > 0 &&
-      campaignData.selectedPrimaryKPIs.length > 0 &&
+      campaignData.likes.trim().length > 0 &&
+      campaignData.views.trim().length > 0 &&
       campaignData.totalBudget.trim().length > 0 &&
-      campaignData.endDate.trim().length > 0
+      campaignData.durationDays.trim().length > 0
     );
   };
 
@@ -33,12 +34,12 @@ export function useCampaignForm() {
     }
 
     // Step 3: Success Metrics
-    if (campaignData.selectedPrimaryKPIs.length > 0) {
+    if (campaignData.likes.trim().length > 0 && campaignData.views.trim().length > 0) {
       completedSteps++;
     }
 
     // Step 4: Budget & Timeline
-    if (campaignData.totalBudget.trim().length > 0 && campaignData.endDate.trim().length > 0) {
+    if (campaignData.totalBudget.trim().length > 0 && campaignData.durationDays.trim().length > 0) {
       completedSteps++;
     }
 

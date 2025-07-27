@@ -1,5 +1,5 @@
 import { useReadContract, useAccount } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { formatEther, createPublicClient, http } from 'viem';
 import { baseSepolia } from 'viem/chains';
 import CampaignManagerABI from '../../abi/CampaignManager.json';
@@ -28,8 +28,22 @@ export interface Campaign {
   endDate: string;
 }
 
+// Type for campaign details from contract
+type CampaignDetails = [
+  string, // brand
+  string, // creator
+  bigint, // totalValue
+  bigint, // deadline
+  bigint, // targetLikes
+  bigint, // targetViews
+  bigint, // currentLikes
+  bigint, // currentViews
+  bigint, // paidAmount
+  number  // status
+];
+
 export function useCampaigns() {
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -104,7 +118,7 @@ export function useCampaigns() {
         currentViews,
         paidAmount,
         status
-      ] = data as any[];
+      ] = data as CampaignDetails;
 
       const progress = calculateProgress(currentLikes, currentViews, targetLikes, targetViews);
       const statusString = getStatusFromEnum(Number(status));
@@ -132,7 +146,7 @@ export function useCampaigns() {
   };
 
   // Função para buscar todas as campanhas
-  const fetchAllCampaigns = async () => {
+  const fetchAllCampaigns = useCallback(async () => {
     if (!isConnected || !campaignCounter) return;
 
     setLoading(true);
@@ -157,14 +171,14 @@ export function useCampaigns() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isConnected, campaignCounter, fetchCampaignDetails]);
 
   // Buscar campanhas quando o contador mudar ou conectar wallet
   useEffect(() => {
     if (isConnected && campaignCounter) {
       fetchAllCampaigns();
     }
-  }, [isConnected, campaignCounter]);
+  }, [isConnected, campaignCounter, fetchAllCampaigns]);
 
   // Função para recarregar campanhas
   const refetch = () => {

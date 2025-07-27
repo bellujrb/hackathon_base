@@ -1,5 +1,3 @@
-import { Button } from "../../../components/button";
-import Icon from "../../../components/icon";
 
 type AnalyticsHeaderProps = {
   title: string;
@@ -8,7 +6,7 @@ type AnalyticsHeaderProps = {
   onFilter?: () => void;
 };
 
-export function AnalyticsHeader({ title, description, onDownload, onFilter }: AnalyticsHeaderProps) {
+export function AnalyticsHeader({ title, description  }: AnalyticsHeaderProps) {
   return (
     <div className="flex justify-between items-start">
       <div>

@@ -3,7 +3,6 @@ import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagm
 import { parseEther } from 'viem';
 import CampaignManagerABI from '../../abi/CampaignManager.json';
 import { CONTRACT_ADDRESSES } from '../config/contracts';
-import { CampaignData } from '../types/campaign';
 
 interface CreateCampaignParams {
   totalValue: string; // ETH amount as string
