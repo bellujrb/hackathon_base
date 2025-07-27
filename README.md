@@ -10,13 +10,13 @@
 
 ### 🌐 Introduction
 
-Our MiniApp automates influencer campaigns, integrating blockchain technology to ensure transparency, security, and agility.
+Our Application automates influencer campaigns, integrating blockchain technology to ensure transparency, security, and agility.
 
 ---
 
-### 🔴 Base MiniApp
+### 🔴 Base Application
 
-We created a MiniApp on Base using the onchain kit resources from the official documentation. We leveraged the available tools to deliver an integrated, efficient solution that's fully aligned with the Base ecosystem.
+We created a Application on Base using the onchain kit resources from the official documentation. We leveraged the available tools to deliver an integrated, efficient solution that's fully aligned with the Base ecosystem.
 
 --- 
 
