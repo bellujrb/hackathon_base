@@ -4,65 +4,31 @@ import Icon from "../../../components/icon";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import { ConnectWallet } from "@coinbase/onchainkit/wallet";
+import { useCampaigns } from "../../hooks/useCampaigns";
 
 type CampaignsScreenProps = {
   setActiveTab: (tab: string) => void;
 };
 
-type Campaign = {
-  id: string;
-  title: string;
-  status: "ACTIVE" | "COMPLETED" | "PENDING";
-  target: string;
-  endDate: string;
-  totalValue: string;
-  progress: number;
-};
-
 export function CampaignsScreen({ setActiveTab }: CampaignsScreenProps) {
   const { isConnected } = useAccount();
+  const { campaigns, loading, error, refetch } = useCampaigns();
   const [activeFilter, setActiveFilter] = useState("All");
 
-  const campaigns: Campaign[] = [
-    {
-      id: "1",
-      title: "Nike Summer Campaign",
-      status: "ACTIVE",
-      target: "50.000 views",
-      endDate: "2025-07-30",
-      totalValue: "$2.500",
-      progress: 75
-    },
-    {
-      id: "2",
-      title: "Adidas Run Series",
-      status: "COMPLETED",
-      target: "10.000 likes",
-      endDate: "2025-07-20",
-      totalValue: "$1.800",
-      progress: 100
-    },
-    {
-      id: "3",
-      title: "Puma Fitness Challenge",
-      status: "PENDING",
-      target: "25.000 shares",
-      endDate: "2025-08-15",
-      totalValue: "$3.200",
-      progress: 0
-    }
-  ];
-
-  const filters = ["All", "Active", "Pending", "Completed"];
+  const filters = ["All", "Active", "Pending", "Completed", "Expired", "Cancelled"];
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "ACTIVE":
-        return "bg-blue-200 text-green-600";
+        return "bg-green-200 text-green-600";
       case "COMPLETED":
-        return "bg-blue-200 text-green-600";
+        return "bg-blue-200 text-blue-600";
       case "PENDING":
         return "bg-yellow-200 text-yellow-700";
+      case "EXPIRED":
+        return "bg-red-200 text-red-600";
+      case "CANCELLED":
+        return "bg-gray-200 text-gray-600";
       default:
         return "bg-gray-200 text-gray-600";
     }
@@ -134,9 +100,33 @@ export function CampaignsScreen({ setActiveTab }: CampaignsScreenProps) {
         ))}
       </div>
 
+      {/* Loading State */}
+      {loading && (
+        <Card className="bg-white p-6 text-center space-y-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="text-gray-600">Loading campaigns...</p>
+        </Card>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <Card className="bg-white p-6 text-center space-y-4">
+          <Icon name="heart" className="mx-auto text-red-400" size="lg" />
+          <h2 className="text-lg font-semibold text-red-700">Error Loading Campaigns</h2>
+          <p className="text-gray-500 text-sm">{error}</p>
+          <Button
+            variant="ghost"
+            className="bg-blue-500 text-white hover:bg-blue-600"
+            onClick={refetch}
+          >
+            Try Again
+          </Button>
+        </Card>
+      )}
+
       {/* Campaigns List */}
       <div className="space-y-4">
-        {filteredCampaigns.map((campaign) => (
+        {!loading && !error && filteredCampaigns.map((campaign) => (
           <Card key={campaign.id} className="bg-white p-4">
             {/* Campaign Header */}
             <div className="flex justify-between items-start mb-4">
@@ -153,19 +143,48 @@ export function CampaignsScreen({ setActiveTab }: CampaignsScreenProps) {
 
             {/* Campaign Details */}
             <div className="space-y-1 mb-6">
-              <p className="text-sm text-gray-700">Target: {campaign.target}</p>
+              <p className="text-sm text-gray-700">Creator: {campaign.creator}</p>
+              <p className="text-sm text-gray-700">Brand: {campaign.brand}</p>
               <p className="text-sm text-gray-700">Ends: {campaign.endDate}</p>
             </div>
 
             {/* Metrics */}
-            <div className="grid grid-cols-2 gap-4 mb-3">
-              <div className="bg-gray-100 rounded-lg p-3 text-center">
-                <p className="text-xl font-bold text-green-600">{campaign.totalValue}</p>
+            <div className="grid grid-cols-3 gap-2 mb-3">
+              <div className="bg-gray-100 rounded-lg p-2 text-center">
+                <p className="text-lg font-bold text-green-600">${campaign.totalValue}</p>
                 <p className="text-xs text-gray-700">Total value</p>
               </div>
-              <div className="bg-gray-100 rounded-lg p-3 text-center">
-                <p className="text-xl font-bold text-blue-600">{campaign.progress}%</p>
+              <div className="bg-gray-100 rounded-lg p-2 text-center">
+                <p className="text-lg font-bold text-blue-600">{campaign.progress}%</p>
                 <p className="text-xs text-gray-700">Progress</p>
+              </div>
+              <div className="bg-gray-100 rounded-lg p-2 text-center">
+                <p className="text-lg font-bold text-purple-600">${campaign.paidAmount}</p>
+                <p className="text-xs text-gray-700">Paid</p>
+              </div>
+            </div>
+
+            {/* Targets */}
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div className="bg-blue-50 rounded-lg p-2">
+                <p className="text-xs text-gray-600">Target Likes</p>
+                <p className="text-sm font-semibold">{campaign.targetLikes}</p>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-2">
+                <p className="text-xs text-gray-600">Target Views</p>
+                <p className="text-sm font-semibold">{campaign.targetViews}</p>
+              </div>
+            </div>
+
+            {/* Current Progress */}
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div className="bg-green-50 rounded-lg p-2">
+                <p className="text-xs text-gray-600">Current Likes</p>
+                <p className="text-sm font-semibold text-green-600">{campaign.currentLikes}</p>
+              </div>
+              <div className="bg-green-50 rounded-lg p-2">
+                <p className="text-xs text-gray-600">Current Views</p>
+                <p className="text-sm font-semibold text-green-600">{campaign.currentViews}</p>
               </div>
             </div>
 
