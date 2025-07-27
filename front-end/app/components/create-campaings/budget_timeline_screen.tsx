@@ -179,7 +179,7 @@ export function BudgetTimelineScreen({ setActiveTab }: BudgetTimelineScreenProps
             />
           </div>
           <p className="text-xs text-gray-500">
-            Use até 4 casas decimais (ex: 1.2345 ETH)
+          Use up to 4 decimal places (e.g. 1.2345 ETH)
           </p>
         </div>
 
