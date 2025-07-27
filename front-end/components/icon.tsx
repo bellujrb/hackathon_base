@@ -1,10 +1,12 @@
+import React from "react";
+
 type IconProps = {
-    name: "heart" | "star" | "check" | "plus" | "arrow-right" | "lightning" | "wallet" | "camera";
+    name: "heart" | "star" | "check" | "plus" | "arrow-right" | "lightning" | "wallet" | "camera" | "home";
     size?: "sm" | "md" | "lg";
     className?: string;
   }
   
-  export function Icon({ name, size = "md", className = "" }: IconProps) {
+  function Icon({ name, size = "md", className = "" }: IconProps) {
     const sizeClasses = {
       sm: "w-4 h-4",
       md: "w-5 h-5",
@@ -137,6 +139,22 @@ type IconProps = {
           <circle cx="12" cy="13" r="4" />
         </svg>
       ),
+      home: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <title>Home</title>
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      ),
     };
   
     return (
@@ -146,4 +164,4 @@ type IconProps = {
     );
   }
   
-  
+  export default Icon;

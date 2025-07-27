@@ -22,8 +22,8 @@ import {
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useAccount } from "wagmi";
 import { Features } from "./components/onboarding/onboarding_features";
-import { Button } from "./components/ui/button";
-import { Icon } from "./components/ui/icon";
+import { Button } from "../components/button";
+import Icon from "../components/icon";
 import { Home } from "./components/welcome_screen/welcome";
 import { ConnectionScreen } from "./components/connection/connection_screen";
 import { DashboardScreen } from "./components/dashboard/dashboard_screen";
@@ -121,7 +121,7 @@ export default function App() {
           {activeTab === "success-metrics" && <SuccessMetricsScreen setActiveTab={setActiveTab} />}
           {activeTab === "budget-timeline" && <BudgetTimelineScreen setActiveTab={setActiveTab} />}
           {activeTab === "campaign-success" && <CampaignSuccessScreen setActiveTab={setActiveTab} />}
-          {activeTab === "analytics" && <AnalyticsScreen setActiveTab={setActiveTab} />}
+          {activeTab === "analytics" && <AnalyticsScreen />}
           {activeTab === "settings" && <SettingsScreen setActiveTab={setActiveTab} />}
         </main>
 

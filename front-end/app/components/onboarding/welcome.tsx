@@ -1,6 +1,6 @@
-import { Button } from "../ui/button";
-import { Card } from "../ui/card";
-import { Icon } from "../ui/icon";
+import { Button } from "../../../components/button";
+import { Card } from "../../../components/card";
+import Icon from "../../../components/icon";
 
 type FeaturesProps = {
   setActiveTab: (tab: string) => void;

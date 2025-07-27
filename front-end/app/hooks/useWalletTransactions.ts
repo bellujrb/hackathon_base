@@ -1,7 +1,5 @@
 import { useAccount } from "wagmi";
 import { useState, useEffect } from "react";
-import { createPublicClient, http, formatEther } from "viem";
-import { base } from "viem/chains";
 
 interface Transaction {
   id: string;
@@ -16,10 +14,10 @@ interface Transaction {
   icon: 'star' | 'plus' | 'arrow-right';
 }
 
-const client = createPublicClient({
-  chain: base,
-  transport: http(),
-});
+// const client = createPublicClient({
+//   chain: base,
+//   transport: http(),
+// });
 
 export function useWalletTransactions() {
   const { address, isConnected } = useAccount();

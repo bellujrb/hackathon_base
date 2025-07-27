@@ -1,11 +1,4 @@
-import { createPublicClient, http, formatEther, getAddress } from "viem";
-import { base } from "viem/chains";
 import { NextRequest, NextResponse } from "next/server";
-
-const client = createPublicClient({
-  chain: base,
-  transport: http(),
-});
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -20,10 +13,10 @@ export async function GET(request: NextRequest) {
 
   try {
     // Buscar o último bloco para limitar a busca
-    const latestBlock = await client.getBlockNumber();
+    // const latestBlock = await client.getBlockNumber();
     
     // Buscar transações dos últimos 100 blocos (aproximadamente 20 minutos)
-    const fromBlock = latestBlock - BigInt(100);
+    // const fromBlock = latestBlock - BigInt(100);
     
     // Por enquanto, retornar transações mock até implementar a busca real
     // TODO: Implementar busca real de transações da Base

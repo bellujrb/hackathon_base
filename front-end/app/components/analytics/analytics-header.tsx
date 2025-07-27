@@ -1,5 +1,5 @@
-import { Button } from "../ui/button";
-import { Icon } from "../ui/icon";
+import { Button } from "../../../components/button";
+import Icon from "../../../components/icon";
 
 type AnalyticsHeaderProps = {
   title: string;

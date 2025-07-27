@@ -1,16 +1,16 @@
-import { Button } from "../ui/button";
-import { Card } from "../ui/card";
-import { Icon } from "../ui/icon";
+import { Button } from "../../../components/button";
+import { Card } from "../../../components/card";
+import Icon from "../../../components/icon";
 import { useState } from "react";
 import { useAccount } from "wagmi";
-import { ConnectWallet, Wallet } from "@coinbase/onchainkit/wallet";
+import { ConnectWallet } from "@coinbase/onchainkit/wallet";
 
 type ConnectionScreenProps = {
   setActiveTab: (tab: string) => void;
 };
 
 export function ConnectionScreen({ setActiveTab }: ConnectionScreenProps) {
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const [instagramConnected, setInstagramConnected] = useState(false);
   const [isConnectingInstagram, setIsConnectingInstagram] = useState(false);
 

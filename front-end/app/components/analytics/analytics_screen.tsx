@@ -9,14 +9,14 @@ import { EngagementBreakdown } from "./engagement-breakdown";
 import { BestPerformance } from "./best-performance";
 import { TopPerformingContent } from "./top-performing-content";
 import { MetricCard as MetricCardType, ChartData, ContentItem, BestPerformanceData } from "./types";
-import { Card } from "../ui/card";
-import { Icon } from "../ui/icon";
+import { Card } from "../../../components/card";
+import Icon from "../../../components/icon";
 
-type AnalyticsScreenProps = {
-  setActiveTab: (tab: string) => void;
-};
+// type AnalyticsScreenProps = {
+//   setActiveTab: (tab: string) => void;
+// };
 
-export function AnalyticsScreen({ setActiveTab }: AnalyticsScreenProps) {
+export function AnalyticsScreen() {
   const { isConnected } = useAccount();
   const [activeTimeFilter, setActiveTimeFilter] = useState("7 days");
   const [selectedMetric, setSelectedMetric] = useState("views");
@@ -167,17 +167,14 @@ export function AnalyticsScreen({ setActiveTab }: AnalyticsScreenProps) {
 
   const handleViewAll = () => {
     // Implementar navegação para ver todos os conteúdos
-    console.log("View all content");
   };
 
   const handleDownload = () => {
     // Implementar download dos dados
-    console.log("Download analytics");
   };
 
   const handleFilter = () => {
     // Implementar filtros adicionais
-    console.log("Open filters");
   };
 
   if (!isConnected) {

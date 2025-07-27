@@ -1,5 +1,5 @@
-import { Card } from "../ui/card";
-import { Icon } from "../ui/icon";
+import { Card } from "../../../components/card";
+import Icon from "../../../components/icon";
 
 type MetricCardProps = {
   id: string;
@@ -14,7 +14,6 @@ type MetricCardProps = {
 };
 
 export function MetricCard({ 
-  id, 
   title, 
   value, 
   icon, 

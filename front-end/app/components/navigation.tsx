@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { Button } from "./ui/button";
-import { Icon } from "./ui/icon";
+import { Button } from "../../components/button";
+import Icon from "../../components/icon";
 
 export function Navigation() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export function Navigation() {
   return (
     <nav className="flex space-x-2 mb-6">
       <Button
-        variant={pathname === "/" || pathname === "/home" ? "default" : "outline"}
+        variant={pathname === "/" || pathname === "/home" ? "primary" : "outline"}
         size="sm"
         onClick={() => navigateTo("/home")}
         className="flex-1"
@@ -24,7 +24,7 @@ export function Navigation() {
         Home
       </Button>
       <Button
-        variant={pathname === "/features" ? "default" : "outline"}
+        variant={pathname === "/features" ? "primary" : "outline"}
         size="sm"
         onClick={() => navigateTo("/features")}
         className="flex-1"

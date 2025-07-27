@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Button } from "../ui/button";
-import { Card } from "../ui/card";
-import { Icon } from "../ui/icon";
+import { Button } from "../../../components/button";
+import { Card } from "../../../components/card";
+import Icon from "../../../components/icon";
 import { useCampaignForm } from "../../hooks/useCampaignForm";
 
 type CampaignSuccessScreenProps = {
@@ -65,7 +65,7 @@ export function CampaignSuccessScreen({ setActiveTab }: CampaignSuccessScreenPro
     };
     
     saveData();
-  }, []);
+  }, [saveCampaign]);
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -205,7 +205,7 @@ export function CampaignSuccessScreen({ setActiveTab }: CampaignSuccessScreenPro
             <h3 className="font-semibold text-black">Next Steps</h3>
             <p className="text-sm text-gray-700 leading-relaxed">
               The campaign will only be finalized when a brand completes their registration 
-              and makes the payment to the campaign pool. You'll be notified once the 
+              and makes the payment to the campaign pool. You&apos;ll be notified once the 
               campaign is fully funded and ready to start.
             </p>
           </div>

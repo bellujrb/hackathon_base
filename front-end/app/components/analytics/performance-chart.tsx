@@ -1,8 +1,9 @@
-import { Card } from "../ui/card";
+import { Card } from "../../../components/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { ChartData } from './types';
 
 type PerformanceChartProps = {
-  data: any[];
+  data: ChartData[];
   selectedMetric: string;
   getValueFormatter: (metric: string) => (value: number) => string;
   getMetricLabel: (metric: string) => string;
@@ -43,7 +44,7 @@ export function PerformanceChart({
               borderRadius: '8px',
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
             }}
-            formatter={(value: any) => [getValueFormatter(selectedMetric)(value), getMetricLabel(selectedMetric)]}
+            formatter={(value: number) => [getValueFormatter(selectedMetric)(value), getMetricLabel(selectedMetric)]}
           />
           <Legend 
             verticalAlign="bottom" 

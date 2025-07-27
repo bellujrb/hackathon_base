@@ -1,4 +1,4 @@
-import { Card } from "../ui/card";
+import { Card } from "../../../components/card";
 
 type BestPerformanceProps = {
   bestDay: {

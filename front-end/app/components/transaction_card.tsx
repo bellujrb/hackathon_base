@@ -2,9 +2,9 @@ import { useNotification } from "@coinbase/onchainkit/minikit";
 import { Transaction, TransactionButton, TransactionError, TransactionResponse, TransactionStatus, TransactionStatusAction, TransactionStatusLabel, TransactionToast, TransactionToastAction, TransactionToastIcon, TransactionToastLabel } from "@coinbase/onchainkit/transaction";
 import { useCallback, useMemo } from "react";
 import { useAccount } from "wagmi";
-import { Card } from "./ui/card";
+import { Card } from "../../components/card";
 
-function TransactionCard() {
+export function TransactionCard() {
     const { address } = useAccount();
   
     // Example transaction call - sending 0 ETH to self
