@@ -9,14 +9,12 @@ export interface CampaignData {
   selectedPlatforms: string[];
   
   // Success Metrics
-  selectedPrimaryKPIs: string[];
-  selectedSecondaryKPIs: string[];
-  primaryTargets: Record<string, string>;
-  secondaryTargets: Record<string, string>;
+  likes: string;
+  views: string;
   
   // Budget & Timeline
   totalBudget: string;
-  endDate: string;
+  durationDays: string;
 }
 
 // Content Type Definition

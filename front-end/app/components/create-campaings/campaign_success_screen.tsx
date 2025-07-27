@@ -2,16 +2,17 @@ import { useState, useEffect } from "react";
 import { Button } from "../../../components/button";
 import { Card } from "../../../components/card";
 import Icon from "../../../components/icon";
-import { useCampaignForm } from "../../hooks/useCampaignForm";
+import { useCampaign } from "../../contexts/CampaignContext";
 
 type CampaignSuccessScreenProps = {
   setActiveTab: (tab: string) => void;
 };
 
 export function CampaignSuccessScreen({ setActiveTab }: CampaignSuccessScreenProps) {
-  const { campaignData, resetCampaignData, saveCampaign } = useCampaignForm();
+  const { campaignData, resetCampaignData } = useCampaign();
   const [copied, setCopied] = useState(false);
   const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
+  const [transactionHash, setTransactionHash] = useState<string | null>(null);
 
   // Função para formatar números em formato K
   const formatNumber = (value: string | number): string => {
@@ -35,8 +36,10 @@ export function CampaignSuccessScreen({ setActiveTab }: CampaignSuccessScreenPro
     });
   };
   
-  // Generate random campaign ID
-  const campaignLink = `base.influencer.pay/82391`;
+  // Generate campaign link
+  const campaignLink = transactionHash 
+    ? `base.influencer.pay/campaign/${transactionHash.slice(0, 10)}`
+    : `base.influencer.pay/campaign/new`;
 
   const handleCopyLink = async () => {
     try {
@@ -53,19 +56,18 @@ export function CampaignSuccessScreen({ setActiveTab }: CampaignSuccessScreenPro
     setActiveTab("dashboard");
   };
 
-  // Save campaign data when component mounts
+  // Log campaign data and get transaction hash when component mounts
   useEffect(() => {
-    const saveData = async () => {
-      try {
-        const result = await saveCampaign();
-        console.log("Campaign saved successfully:", result);
-      } catch (error) {
-        console.error("Failed to save campaign:", error);
-      }
-    };
+    console.log("Campaign created successfully:", campaignData);
     
-    saveData();
-  }, [saveCampaign]);
+    // Get transaction hash from localStorage
+    const hash = localStorage.getItem('campaignTransactionHash');
+    if (hash) {
+      setTransactionHash(hash);
+      // Clear from localStorage after reading
+      localStorage.removeItem('campaignTransactionHash');
+    }
+  }, [campaignData]);
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -110,8 +112,8 @@ export function CampaignSuccessScreen({ setActiveTab }: CampaignSuccessScreenPro
               <span className="font-medium">{formatETH(campaignData.totalBudget)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">End Date:</span>
-              <span className="font-medium">{campaignData.endDate}</span>
+              <span className="text-gray-600">Duration:</span>
+              <span className="font-medium">{campaignData.durationDays} days</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Content Types:</span>
@@ -122,33 +124,20 @@ export function CampaignSuccessScreen({ setActiveTab }: CampaignSuccessScreenPro
               <span className="font-medium">{campaignData.selectedPlatforms.join(', ')}</span>
             </div>
             
-            {/* Primary KPIs */}
+            {/* Success Metrics */}
             <div className="pt-2 border-t border-gray-200">
               <div className="flex justify-between mb-2">
-                <span className="text-gray-600 font-medium">KPIs Primários:</span>
+                <span className="text-gray-600 font-medium">Success Metrics:</span>
               </div>
-              {campaignData.selectedPrimaryKPIs.map((kpi) => (
-                <div key={kpi} className="flex justify-between text-sm">
-                  <span className="text-gray-600 capitalize">{kpi}:</span>
-                  <span className="font-medium">{formatNumber(campaignData.primaryTargets[kpi] || '0')}</span>
-                </div>
-              ))}
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-600">Views Target:</span>
+                <span className="font-medium">{formatNumber(campaignData.views || '0')}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-600">Likes Target:</span>
+                <span className="font-medium">{formatNumber(campaignData.likes || '0')}</span>
+              </div>
             </div>
-
-            {/* Secondary KPIs */}
-            {campaignData.selectedSecondaryKPIs.length > 0 && (
-              <div className="pt-2 border-t border-gray-200">
-                <div className="flex justify-between mb-2">
-                  <span className="text-gray-600 font-medium">KPIs Secundários:</span>
-                </div>
-                {campaignData.selectedSecondaryKPIs.map((kpi) => (
-                  <div key={kpi} className="flex justify-between text-sm">
-                    <span className="text-gray-600 capitalize">{kpi}:</span>
-                    <span className="font-medium">{formatNumber(campaignData.secondaryTargets[kpi] || '0')}</span>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         )}
       </Card>
@@ -212,16 +201,59 @@ export function CampaignSuccessScreen({ setActiveTab }: CampaignSuccessScreenPro
         </div>
       </Card>
 
+      {/* Blockchain Transaction Info */}
+      {transactionHash && (
+        <Card className="bg-green-50 p-6 space-y-4">
+          <div className="flex items-start space-x-3">
+            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+              <Icon name="check" className="text-green-600" size="sm" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-black">Blockchain Transaction</h3>
+              <p className="text-sm text-gray-700">
+                Your campaign has been successfully created on the blockchain!
+              </p>
+              <div className="flex items-center space-x-2">
+                <span className="text-xs text-gray-500">Transaction Hash:</span>
+                <code className="text-xs bg-white px-2 py-1 rounded border">
+                  {transactionHash.slice(0, 10)}...{transactionHash.slice(-8)}
+                </code>
+                <Button
+                  onClick={() => {
+                    navigator.clipboard.writeText(transactionHash);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  variant="ghost"
+                  size="sm"
+                  className="px-2 py-1 text-xs"
+                >
+                  Copy
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Card>
+      )}
+
       {/* Campaign Status */}
       <Card className="bg-gray-50 p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <h3 className="font-semibold text-black">Campaign Status</h3>
-            <p className="text-sm text-gray-600">Waiting for brand registration</p>
+            <p className="text-sm text-gray-600">
+              {transactionHash ? 'Campaign created on blockchain' : 'Waiting for brand registration'}
+            </p>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
-            <span className="text-sm font-medium text-yellow-700">Pending</span>
+            <div className={`w-3 h-3 rounded-full animate-pulse ${
+              transactionHash ? 'bg-green-400' : 'bg-yellow-400'
+            }`}></div>
+            <span className={`text-sm font-medium ${
+              transactionHash ? 'text-green-700' : 'text-yellow-700'
+            }`}>
+              {transactionHash ? 'Created' : 'Pending'}
+            </span>
           </div>
         </div>
       </Card>

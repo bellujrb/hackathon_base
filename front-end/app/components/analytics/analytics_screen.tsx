@@ -9,8 +9,8 @@ import { EngagementBreakdown } from "./engagement-breakdown";
 import { BestPerformance } from "./best-performance";
 import { TopPerformingContent } from "./top-performing-content";
 import { MetricCard as MetricCardType, ChartData, ContentItem, BestPerformanceData } from "./types";
-import { Card } from "../../../components/card";
-import Icon from "../../../components/icon";
+import { Card } from "@/components/card";
+import Icon from "@/components/icon";
 
 // type AnalyticsScreenProps = {
 //   setActiveTab: (tab: string) => void;
@@ -35,31 +35,31 @@ export function AnalyticsScreen() {
       { day: 'Sun', value: 0.1, lastWeek: 0.11 }
     ],
     engagement: [
-      { day: 'Mon', value: 5.2, lastWeek: 4.8 },
-      { day: 'Tue', value: 6.8, lastWeek: 5.1 },
-      { day: 'Wed', value: 4.9, lastWeek: 5.3 },
-      { day: 'Thu', value: 7.1, lastWeek: 6.2 },
-      { day: 'Fri', value: 6.5, lastWeek: 5.9 },
-      { day: 'Sat', value: 8.4, lastWeek: 7.8 },
-      { day: 'Sun', value: 7.9, lastWeek: 7.2 }
+      { day: 'Mon', value: 6.5,   lastWeek: 6.0},
+      { day: 'Tue', value: 8.5,   lastWeek: 6.6},
+      { day: 'Wed', value: 6.13,  lastWeek: 6.9},
+      { day: 'Thu', value: 8.88,  lastWeek: 8.0},
+      { day: 'Fri', value: 8.13,  lastWeek: 7.6},
+      { day: 'Sat', value: 10.5,  lastWeek: 10.2},
+      { day: 'Sun', value: 9.88,  lastWeek: 9.0}
     ],
     earnings: [
-      { day: 'Mon', value: 1200, lastWeek: 1100 },
-      { day: 'Tue', value: 1800, lastWeek: 1600 },
-      { day: 'Wed', value: 1400, lastWeek: 1500 },
-      { day: 'Thu', value: 2200, lastWeek: 1900 },
-      { day: 'Fri', value: 2000, lastWeek: 1800 },
-      { day: 'Sat', value: 2800, lastWeek: 2500 },
-      { day: 'Sun', value: 2600, lastWeek: 2400 }
+      { day: 'Mon', value: 0, lastWeek: 0 },
+      { day: 'Tue', value: 0, lastWeek: 0 },
+      { day: 'Wed', value: 0, lastWeek: 0 },
+      { day: 'Thu', value: 0, lastWeek: 0 },
+      { day: 'Fri', value: 0, lastWeek: 0 },
+      { day: 'Sat', value: 0, lastWeek: 0 },
+      { day: 'Sun', value: 0, lastWeek: 0 }
     ],
     campaigns: [
-      { day: 'Mon', value: 2, lastWeek: 2 },
-      { day: 'Tue', value: 3, lastWeek: 2 },
-      { day: 'Wed', value: 2, lastWeek: 3 },
-      { day: 'Thu', value: 4, lastWeek: 3 },
-      { day: 'Fri', value: 3, lastWeek: 4 },
-      { day: 'Sat', value: 5, lastWeek: 4 },
-      { day: 'Sun', value: 4, lastWeek: 5 }
+      { day: 'Mon', value: 0, lastWeek: 0 },
+      { day: 'Tue', value: 0, lastWeek: 0 },
+      { day: 'Wed', value: 0, lastWeek: 0 },
+      { day: 'Thu', value: 0, lastWeek: 0 },
+      { day: 'Fri', value: 0, lastWeek: 0 },
+      { day: 'Sat', value: 0, lastWeek: 0 },
+      { day: 'Sun', value: 0, lastWeek: 0 }
     ]
   };
 
@@ -67,26 +67,26 @@ export function AnalyticsScreen() {
     {
       id: "views",
       title: "Views",
-      value: "2.4M",
+      value: "3.200",
       icon: "star",
       iconColor: "text-white",
       iconBgColor: "bg-blue-500",
-      trend: "12.8%",
+      trend: "8%",
       isSelected: true
     },
     {
       id: "engagement",
       title: "Engagement",
-      value: "8.4%",
+      value: "25%",
       icon: "heart",
       iconColor: "text-white",
       iconBgColor: "bg-red-500",
-      trend: "5.2%"
+      trend: "1%",
     },
     {
       id: "earnings",
       title: "Earnings",
-      value: "18.650",
+      value: "0",
       icon: "check",
       iconColor: "text-white",
       iconBgColor: "bg-green-500",
@@ -95,55 +95,13 @@ export function AnalyticsScreen() {
     {
       id: "campaigns",
       title: "Campaigns",
-      value: "24",
+      value: "0",
       icon: "plus",
       iconColor: "text-white",
       iconBgColor: "bg-purple-500",
       trend: "15%"
     }
   ];
-
-  const topContent: ContentItem[] = [
-    {
-      id: "1",
-      views: "15K",
-      likes: "3K",
-      comments: "180",
-      date: "2025-07-20",
-      engagement: "17.9%"
-    },
-    {
-      id: "2",
-      views: "12K",
-      likes: "2K",
-      comments: "95",
-      date: "2025-07-19",
-      engagement: "15.8%"
-    },
-    {
-      id: "3",
-      views: "12K",
-      likes: "2K",
-      comments: "95",
-      date: "2025-07-19",
-      engagement: "15.8%"
-    }
-  ];
-
-  const bestPerformanceData: BestPerformanceData = {
-    bestDay: {
-      day: "Saturday",
-      percentage: "+34% above average"
-    },
-    peakHours: {
-      hours: "6-8 PM",
-      percentage: "+28% engagement"
-    },
-    topContentType: {
-      type: "Video posts",
-      percentage: "+45% vs photos"
-    }
-  };
 
   const getMetricLabel = (metric: string) => {
     switch (metric) {
@@ -249,14 +207,12 @@ export function AnalyticsScreen() {
         shares={8}
       />
 
-      {/* Best Performance */}
-      <BestPerformance {...bestPerformanceData} />
+      {/* <BestPerformance {...bestPerformanceData} />
 
-      {/* Top Performing Content */}
       <TopPerformingContent
         content={topContent}
         onViewAll={handleViewAll}
-      />
+      /> */}
     </div>
   );
 } 

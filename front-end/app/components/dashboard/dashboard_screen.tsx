@@ -84,20 +84,20 @@ export function DashboardScreen({ setActiveTab }: DashboardScreenProps) {
         <Card className="p-4">
           <div className="space-y-3">
             <div className="bg-purple-100 rounded-lg p-2 inline-block">
-              <h2 className="text-2xl font-bold text-[#9637EC]">2.4M</h2>
+              <h2 className="text-2xl font-bold text-[#9637EC]">3.200</h2>
             </div>
             <p className="text-gray-600 text-sm">Total views</p>
-            <p className="text-green-600 text-xs">+12.8% this month</p>
+            <p className="text-green-600 text-xs">8% this month</p>
           </div>
         </Card>
         
         <Card className="p-4">
           <div className="space-y-3">
             <div className="bg-purple-100 rounded-lg p-2 inline-block">
-              <h2 className="text-2xl font-bold text-[#9637EC]">5</h2>
+              <h2 className="text-2xl font-bold text-[#9637EC]">0</h2>
             </div>
             <p className="text-gray-600 text-sm">Active Campaings</p>
-            <p className="text-green-600 text-xs">+3 this month</p>
+            <p className="text-green-600 text-xs">0 this month</p>
           </div>
         </Card>
       </div>
