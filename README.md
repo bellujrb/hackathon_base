@@ -14,6 +14,13 @@ Our Application automates influencer campaigns, integrating blockchain technolog
 
 ---
 
+### 🌐 Influencer and Brand Application
+
+- Influencer: [Click here](https://influnest-base.vercel.app/)
+- Link Payment Brand: [Click here](https://influnest-base.vercel.app/campaign-pay/32482)
+
+---
+
 ### 🔴 Base Application
 
 We created a Application on Base using the onchain kit resources from the official documentation. We leveraged the available tools to deliver an integrated, efficient solution that's fully aligned with the Base ecosystem.
