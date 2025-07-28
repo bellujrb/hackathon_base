@@ -38,8 +38,8 @@ export function CampaignSuccessScreen({ setActiveTab }: CampaignSuccessScreenPro
   
   // Generate campaign link
   const campaignLink = transactionHash 
-    ? `base.influencer.pay/campaign/${transactionHash.slice(0, 10)}`
-    : `base.influencer.pay/campaign/new`;
+    ? `http://influnest-base.vercel.app/campaign-pay/${transactionHash.slice(0, 10)}`
+    : `http://influnest-base.vercel.app/campaign-pay/new`;
 
   const handleCopyLink = async () => {
     try {
