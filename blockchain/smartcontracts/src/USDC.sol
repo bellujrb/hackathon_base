@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {ERC20} from "lib/solady/src/tokens/ERC20.sol";
-import {Ownable} from "lib/solady/src/auth/Ownable.sol";
+import {ERC20} from "solady/tokens/ERC20.sol";
+import {Ownable} from "solady/auth/Ownable.sol";
 
 contract USDC is ERC20, Ownable {
     constructor() {

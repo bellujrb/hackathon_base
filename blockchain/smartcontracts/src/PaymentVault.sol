@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {IERC20} from "lib/forge-std/src/interfaces/IERC20.sol";
-import {Ownable} from "lib/solady/src/auth/Ownable.sol";
-import {SafeTransferLib} from "lib/solady/src/utils/SafeTransferLib.sol";
+import {IERC20} from "forge-std/interfaces/IERC20.sol";
+import {Ownable} from "solady/auth/Ownable.sol";
+import {SafeTransferLib} from "solady/utils/SafeTransferLib.sol";
 
 contract PaymentVault is Ownable {
     using SafeTransferLib for address;

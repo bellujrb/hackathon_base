@@ -3,7 +3,10 @@ src = 'src'                                                   # the source direc
 test = 'test'                                                 # the test directory
 out = 'artifacts/'                                            # the output directory (for artifacts)
 libs = ["./lib"]
-remappings = []                                               # a list of remappings
+remappings = [
+    "solady/=lib/solady/src/",
+    "forge-std/=lib/forge-std/src/"
+]                                               # a list of remappings
 libraries = []                                                # a list of deployed libraries to link against
 cache = true                                                  # whether to cache builds or not
 force = true                                                  # whether to ignore the cache (clean build)

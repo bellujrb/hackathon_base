@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {Script, console} from "lib/forge-std/src/Script.sol";
+import {Script, console} from "../lib/forge-std/src/Script.sol";
 import {CampaignManager} from "../src/CampaignManager.sol";
 import {OracleConnector} from "../src/OracleConnector.sol";
 import {PaymentVault} from "../src/PaymentVault.sol";

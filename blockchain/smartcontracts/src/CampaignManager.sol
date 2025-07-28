@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {IERC20} from "lib/forge-std/src/interfaces/IERC20.sol";
-import {Ownable} from "lib/solady/src/auth/Ownable.sol";
+import {IERC20} from "forge-std/interfaces/IERC20.sol";
+import {Ownable} from "solady/auth/Ownable.sol";
 import {PaymentVault} from "./PaymentVault.sol";
 import {OracleConnector} from "./OracleConnector.sol";
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {Ownable} from "lib/solady/src/auth/Ownable.sol";
+import {Ownable} from "solady/auth/Ownable.sol";
 
 contract OracleConnector is Ownable {
     event MetricsUpdated(uint256 campaignId, uint256 likes, uint256 views);
