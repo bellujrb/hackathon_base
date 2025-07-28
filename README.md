@@ -10,13 +10,13 @@
 
 ### 🌐 Introduction
 
-Our MiniApp automates influencer campaigns, integrating blockchain technology to ensure transparency, security, and agility.
+Our Application automates influencer campaigns, integrating blockchain technology to ensure transparency, security, and agility.
 
 ---
 
-### 🔴 Base MiniApp
+### 🔴 Base Application
 
-We created a MiniApp on Base using the onchain kit resources from the official documentation. We leveraged the available tools to deliver an integrated, efficient solution that's fully aligned with the Base ecosystem.
+We created a Application on Base using the onchain kit resources from the official documentation. We leveraged the available tools to deliver an integrated, efficient solution that's fully aligned with the Base ecosystem.
 
 --- 
 
@@ -24,10 +24,10 @@ We created a MiniApp on Base using the onchain kit resources from the official d
 
 📄 **Deployed Contracts:**  
 
-- 🪙 [CampaignManager](https://sepolia.basescan.org/address/0xE7c3e1C1F678cDfE8651556F28c396A38CC88E8D) (Manager Campaings)
-- 📡 [OracleConnector](https://sepolia.basescan.org/address/0xB457f5908dE044843C90aA1771D999dA8A9Bf3fD) (Oracle for collect data API Instagram)
-- ⚽ [Payment Vault](https://sepolia.basescan.org/address/0x101De02821A2b148c49cd39d2182dB216C74DC5F) (For payments Influencers)
-- 💵 [USDC](https://sepolia.basescan.org/address/0x0B971C4e62AB0eC19CaF3eBb0527e8A528fcAdD6) (USDC for Payments) 
+- 🪙 [CampaignManager](https://sepolia.basescan.org/address/0xe7c3e1c1f678cdfe8651556f28c396a38cc88e8d) (Manager Campaings)
+- 📡 [OracleConnector](https://sepolia.basescan.org/address/0x101de02821a2b148c49cd39d2182db216c74dc5f) (Oracle for collect data API Instagram)
+- ⚽ [Payment Vault](https://sepolia.basescan.org/address/0xb457f5908de044843c90aa1771d999da8a9bf3fd) (For payments Influencers)
+- 💵 [USDC](https://sepolia.basescan.org/address/0x0b971c4e62ab0ec19caf3ebb0527e8a528fcadd6) (USDC for Payments) 
 
 ✅ Actively in development · Live on **Base Sepolia**  
 
