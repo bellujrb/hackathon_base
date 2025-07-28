@@ -51,7 +51,7 @@ contract OracleConnector is Ownable {
             campaignManager != address(0),
             "OracleConnector: campaign manager not set"
         );
-        (bool success, bytes memory data) = campaignManager.call(
+        (bool success, ) = campaignManager.call(
             abi.encodeWithSignature(
                 "updateMetrics(bytes4,uint256,uint256)",
                 campaignId,
