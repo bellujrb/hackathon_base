@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "../../../components/button";
 import Icon from "../../../components/icon";
 import QRCode from "qrcode";
@@ -18,7 +19,6 @@ type PixPaymentScreenProps = {
 };
 
 export function PixPaymentScreen({ 
-  campaignId, 
   onBack, 
   onConfirmPayment, 
   amount = "$5.000",
@@ -44,7 +44,7 @@ export function PixPaymentScreen({
       }
     }).then((url: string) => {
       setQrCodeUrl(url);
-    }).catch((err: any) => {
+    }).catch((err: Error) => {
       console.error("Error generating QR code:", err);
     });
   });
@@ -100,9 +100,11 @@ export function PixPaymentScreen({
             <div className="text-center space-y-4">
               {qrCodeUrl ? (
                 <div className="flex justify-center">
-                  <img 
+                  <Image 
                     src={qrCodeUrl} 
                     alt="PIX QR Code" 
+                    width={192}
+                    height={192}
                     className="w-48 h-48 rounded-lg"
                   />
                 </div>

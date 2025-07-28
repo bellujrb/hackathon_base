@@ -24,11 +24,11 @@ type CompanyData = {
 };
 
 export function ReviewCampaign({ campaignId }: ReviewCampaignProps) {
-  const [isConnecting, setIsConnecting] = useState(false);
+  const [isConnecting] = useState(false);
   const [currentStep, setCurrentStep] = useState<'review' | 'company-data' | 'pix-payment'>('review');
   const [companyData, setCompanyData] = useState<CompanyData | null>(null);
   const { isConnected } = useAccount();
-  const [campaignData, setCampaignData] = useState({
+  const [campaignData] = useState({
     name: "Summer Beach Collection",
     influencer: {
       handle: "@cristinaprado",
@@ -55,17 +55,17 @@ export function ReviewCampaign({ campaignId }: ReviewCampaignProps) {
     }
   }, [campaignId]);
 
-  const handleConnectWallet = async () => {
-    setIsConnecting(true);
-    try {
-      console.log("Connecting wallet...");
-      await new Promise(resolve => setTimeout(resolve, 2000));
-    } catch (error) {
-      console.error("Failed to connect wallet:", error);
-    } finally {
-      setIsConnecting(false);
-    }
-  };
+  // const handleConnectWallet = async () => {
+  //   setIsConnecting(true);
+  //   try {
+  //     console.log("Connecting wallet...");
+  //     await new Promise(resolve => setTimeout(resolve, 2000));
+  //   } catch (error) {
+  //     console.error("Failed to connect wallet:", error);
+  //   } finally {
+  //     setIsConnecting(false);
+  //   }
+  // };
 
   const handleContinue = () => {
     setCurrentStep('company-data');

@@ -17,7 +17,7 @@ type CompanyData = {
   responsibleName: string;
 };
 
-export function CompanyDataForm({ campaignId, onBack, onPay }: CompanyDataFormProps) {
+export function CompanyDataForm({ onBack, onPay }: CompanyDataFormProps) {
   const [formData, setFormData] = useState<CompanyData>({
     companyName: "Empresa LTDA",
     cnpj: "00.623.904/0001-73",

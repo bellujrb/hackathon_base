@@ -96,7 +96,7 @@ export function useCampaigns() {
   };
 
   // Função para buscar detalhes de uma campanha
-  const fetchCampaignDetails = async (campaignId: number): Promise<Campaign | null> => {
+  const fetchCampaignDetails = useCallback(async (campaignId: number): Promise<Campaign | null> => {
     try {
       const data = await publicClient.readContract({
         address: CONTRACT_ADDRESSES.CAMPAIGN_MANAGER as `0x${string}`,
@@ -143,7 +143,7 @@ export function useCampaigns() {
       console.error(`Error fetching campaign ${campaignId}:`, err);
       return null;
     }
-  };
+  }, []);
 
   // Função para buscar todas as campanhas
   const fetchAllCampaigns = useCallback(async () => {
