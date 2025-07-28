@@ -44,7 +44,6 @@ export function ReviewCampaign({ campaignId }: ReviewCampaignProps) {
     kpis: {
       views: "50.000",
       likes: "5",
-      shares: "25.000"
     },
     totalValue: "$5.000"
   });
@@ -189,10 +188,6 @@ export function ReviewCampaign({ campaignId }: ReviewCampaignProps) {
               <div className="flex justify-between items-center">
                 <span className="text-gray-600 text-base">Likes:</span>
                 <span className="font-bold text-black text-base">{campaignData.kpis.likes}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600 text-base">Shares:</span>
-                <span className="font-bold text-black text-base">{campaignData.kpis.shares}</span>
               </div>
             </div>
 
